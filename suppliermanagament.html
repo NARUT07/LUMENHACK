@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Management</title>
+    <style>
+        .supplier-list-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="supplier-list-container">
+        <h2>Supplier Management</h2>
+        <form id="supplierForm">
+            <input type="text" id="supplierName" placeholder="Supplier Name" required />
+            <input type="text" id="contactInfo" placeholder="Contact Information" required />
+            <input type="text" id="currentOrderStatus" placeholder="Current Order Status" required />
+            <button type="submit">Add Supplier</button>
+        </form>
+        <ul id="supplierList"></ul>
+    </div>
+
+    <script>
+        let suppliers = [];
+        let editIndex = null;
+
+        const supplierForm = document.getElementById('supplierForm');
+        const supplierList = document.getElementById('supplierList');
+
+        supplierForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('supplierName').value;
+            const contact = document.getElementById('contactInfo').value;
+            const status = document.getElementById('currentOrderStatus').value;
+
+            if (editIndex !== null) {
+                // Update existing supplier
+                suppliers[editIndex] = { name, contactInfo: contact, orderHistory: [], currentOrderStatus: status };
+                editIndex = null;
+            } else {
+                // Add new supplier
+                suppliers.push({ name, contactInfo: contact, orderHistory: [], currentOrderStatus: status });
+            }
+
+            // Reset form
+            supplierForm.reset();
+            renderSuppliers();
+        });
+
+        function renderSuppliers() {
+            supplierList.innerHTML = '';
+            suppliers.forEach((supplier, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>${supplier.name}</strong> - ${supplier.contactInfo} - Current Status: ${supplier.currentOrderStatus}
+                    <button onclick="editSupplier(${index})">Edit</button>
+                    <button onclick="deleteSupplier(${index})">Delete</button>
+                    <button onclick="addOrder(${index})">Add Order</button>
+                    <ul>
+                        ${supplier.orderHistory.length > 0 ? supplier.orderHistory.map(order => `<li>${order}</li>`).join('') : '<li>No orders recorded.</li>'}
+                    </ul>
+                `;
+                supplierList.appendChild(li);
+            });
+        }
+
+        function editSupplier(index) {
+            editIndex = index;
+            const supplier = suppliers[index];
+            document.getElementById('supplierName').value = supplier.name;
+            document.getElementById('contactInfo').value = supplier.contactInfo;
+            document.getElementById('currentOrderStatus').value = supplier.currentOrderStatus;
+        }
+
+        function deleteSupplier(index) {
+            suppliers.splice(index, 1);
+            renderSuppliers();
+        }
+
+        function addOrder(index) {
+            const order = prompt("Enter order details:");
+            if (order) {
+                suppliers[index].orderHistory.push(order);
+                renderSuppliers();
+            }
+        }
+    </script>
+</body>
+</html>
