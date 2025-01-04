@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>User Management System</h1>
+    </header>
+
+    <main>
+        <section id="login">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <section id="product-management">
+            <h2>Product Management</h2>
+            <form id="productForm">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" name="productName" required>
+                
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" required>
+                
+                <label for="stockLevel">Stock Level:</label>
+                <input type="number" id="stockLevel" name="stockLevel" required>
+                
+                <label for="reorderPoint">Reorder Point:</label>
+                <input type="number" id="reorderPoint" name="reorderPoint" required>
+                
+                <button type="submit">Add Product</button>
+            </form>
+        </section>
+
+        <section id="supplier-management">
+            <h2>Supplier Management</h2>
+            <form id="supplierForm">
+                <label for="supplierName">Supplier Name:</label>
+                <input type="text" id="supplierName" name="supplierName" required>
+                
+                <label for="contactInfo">Contact Information:</label>
+                <input type="text" id="contactInfo" name="contactInfo" required>
+                
+                <button type="submit">Add Supplier</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Lumen Technologies. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
