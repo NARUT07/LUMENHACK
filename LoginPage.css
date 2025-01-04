@@ -1,0 +1,184 @@
+/* LoginPage.css */
+
+/* Full-page container */
+.login-container {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6b73ff, #000dff);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  /* Split layout for larger screens */
+  .login-layout {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+  }
+  
+  /* Left section (welcome/message area) */
+  .login-left {
+    display: none;
+    flex: 1;
+    background: linear-gradient(135deg, #000dff, #6b73ff);
+    color: white;
+    padding: 3rem;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .login-left h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .login-left p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+  
+  /* Right section (form area) */
+  .login-right {
+    flex: 1;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Login card styling */
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  }
+  
+  .login-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .form-control, .form-select {
+    width: 100%; /* Ensures both input and dropdown take full width of the container */
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 0.9rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem; /* Space below each input or dropdown */
+  }
+  
+  /* Focus state for input and dropdown */
+  .form-control:focus, .form-select:focus {
+    border-color: #6b73ff;
+    box-shadow: 0 0 5px rgba(107, 115, 255, 0.6);
+  }
+  
+  .btn-primary {
+    background: #6b73ff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 50%; /* Button takes 50% of the width */
+    transition: all 0.3s ease;
+    margin: 0 auto; /* Centers the button horizontally */
+    display: block; /* Ensures the button is a block-level element for centering */
+  }
+  
+  .btn-primary:hover {
+    background: #000dff;
+    box-shadow: 0 4px 12px rgba(0, 13, 255, 0.4);
+  }
+  
+  .login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: #666666;
+  }
+  
+  .login-footer a {
+    color: #6b73ff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-footer a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (min-width: 768px) {
+    .login-left {
+      display: flex;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .login-layout {
+      flex-direction: column;
+    }
+  
+    .login-left {
+      display: none;
+    }
+  
+    .login-right {
+      padding: 2rem;
+    }
+  }
+  /* Labels for input fields */
+.form-label {
+    display: block; /* Ensures labels take up full width */
+    margin-bottom: 0.5rem; /* Adds space below the label */
+    font-size: 1rem; /* Adjust label font size */
+    font-weight: 600; /* Makes label slightly bolder */
+    color: #333333; /* Ensures consistent text color */
+    text-align: left; /* Aligns the label text to the left */
+  }
+  .form-control {
+    width: 100%; /* Ensures input field takes full width */
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 0.9rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem; /* Space below input field */
+  }
+  /* Dropdown (Select) for role */
+.form-select {
+    width: 108%; /* Ensures dropdown takes full width of the container */
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 0.9rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem; /* Space below dropdown */
+  }
+  
+  /* Focus state for dropdown */
+  .form-select:focus {
+    border-color: #6b73ff;
+    box-shadow: 0 0 5px rgba(107, 115, 255, 0.6);
+  }
+  
+  /* Label for dropdown */
+  .form-label {
+    display: block; /* Makes label block level */
+    margin-bottom: 0.5rem; /* Adds spacing between label and dropdown */
+    font-size: 1rem; /* Adjusts font size */
+    font-weight: 600; /* Makes label bold */
+    color: #333; /* Ensures text color consistency */
+  }
