@@ -12,6 +12,25 @@
     <div class="container">
         <h1 class="text-center mt-5">Product Management</h1>
 
+        <!-- Search and Filter Section -->
+        <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex">
+                <input type="text" id="searchInput" class="form-control me-2" placeholder="Search by name or category">
+            </div>
+            <div>
+                <select id="filterSelect" class="form-select" style="width: 200px;">
+                    <option value="">Filter by Stock Status</option>
+                    <option value="in-stock">In Stock</option>
+                    <option value="low-stock">Low Stock</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Search Button below the filter -->
+        <div class="text-end mb-3">
+            <button class="btn btn-primary" id="searchBtn">Search</button>
+        </div>
+
         <!-- Add Product Button -->
         <div class="text-end mb-3">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
@@ -131,7 +150,7 @@
             const row = table.insertRow();
             const status = product.stock >= product.reorderPoint ? '<span class="badge bg-success">In Stock</span>' : '<span class="badge bg-danger">Low Stock</span>';
 
-            row.innerHTML = `
+            row.innerHTML = ` 
                 <td>${table.rows.length}</td>
                 <td><a href="#" onclick="showProductDetails('${product.name}')">${product.name}</a></td>
                 <td>${product.category}</td>
@@ -148,8 +167,7 @@
         // Show product details in a modal
         function showProductDetails(productName) {
             const product = products.find(p => p.name === productName);
-            let details = `
-                Product Name: ${product.name}\n
+            let details = `Product Name: ${product.name}\n
                 Category: ${product.category}\n
                 Stock Level: ${product.stock}\n
                 Reorder Point: ${product.reorderPoint}\n
@@ -161,8 +179,7 @@
                 Supplier Contact: ${product.supplierContact}\n
                 Order Date: ${product.orderDate}\n
                 Quantity: ${product.quantity}\n
-                Order Status: ${product.orderStatus}
-            `;
+                Order Status: ${product.orderStatus}`;
             alert(details);
         }
 
@@ -186,9 +203,9 @@
             document.getElementById('quantity').value = product.quantity;
             document.getElementById('orderStatus').value = product.orderStatus;
 
-            document.querySelector('.modal-title').textContent = 'Edit Product';
-            const modal = new bootstrap.Modal(document.getElementById('addProductModal'));
-            modal.show();
+            // Open modal
+            const myModal = new bootstrap.Modal(document.getElementById('addProductModal'));
+            myModal.show();
         }
 
         // Delete product
@@ -196,51 +213,6 @@
             products.splice(index, 1);
             document.getElementById('productTable').deleteRow(index);
         }
-
-        // Form submit logic for add/edit product
-        document.getElementById('addProductForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const product = {
-                name: document.getElementById('productName').value,
-                category: document.getElementById('productCategory').value,
-                stock: parseInt(document.getElementById('stockLevel').value, 10),
-                reorderPoint: parseInt(document.getElementById('reorderPoint').value, 10),
-                description: document.getElementById('description').value,
-                productImage: document.getElementById('productImage').value,
-                modelNumber: document.getElementById('modelNumber').value,
-                serialNumber: document.getElementById('serialNumber').value,
-                supplierName: document.getElementById('supplierName').value,
-                supplierMail: document.getElementById('supplierMail').value,
-                supplierContact: document.getElementById('supplierContact').value,
-                orderDate: document.getElementById('orderDate').value,
-                quantity: document.getElementById('quantity').value,
-                orderStatus: document.getElementById('orderStatus').value
-            };
-
-            if (currentProductIndex === -1) {
-                // Add new product
-                products.push(product);
-                addProductToTable(product);
-            } else {
-                // Edit existing product
-                products[currentProductIndex] = product;
-
-                // Update the table row
-                const row = document.getElementById('productTable').rows[currentProductIndex];
-                row.cells[1].textContent = product.name;
-                row.cells[2].textContent = product.category;
-                row.cells[3].textContent = product.stock;
-                row.cells[4].textContent = product.reorderPoint;
-                row.cells[5].innerHTML = product.stock >= product.reorderPoint ? '<span class="badge bg-success">In Stock</span>' : '<span class="badge bg-danger">Low Stock</span>';
-            }
-
-            // Close the modal and reset the form
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
-            modal.hide();
-            document.getElementById('addProductForm').reset();
-            currentProductIndex = -1;
-        });
 
         // Handle Excel file upload
         function handleExcelUpload(event) {
@@ -275,6 +247,27 @@
             };
             reader.readAsBinaryString(file);
         }
+
+        // Search and filter functionality
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filterStatus = document.getElementById('filterSelect').value;
+
+            const filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || product.category.toLowerCase().includes(searchTerm);
+                const matchesFilter = filterStatus ? 
+                    (filterStatus === 'in-stock' && product.stock >= product.reorderPoint) || 
+                    (filterStatus === 'low-stock' && product.stock < product.reorderPoint) : true;
+                return matchesSearch && matchesFilter;
+            });
+
+            // Clear existing rows
+            document.getElementById('productTable').innerHTML = '';
+            // Add filtered rows to the table
+            filteredProducts.forEach(product => {
+                addProductToTable(product);
+            });
+        });
     </script>
 </body>
 </html>
